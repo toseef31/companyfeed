@@ -3,11 +3,7 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-        <!-- <a href="{{url('/')}}" class="simple-text logo-mini">
-          <div class="logo-image-small">
-            <img src="{{asset('frontend-assets/dashboard/images/logo.svg')}}">
-          </div>
-        </a> -->
+       
         <a href="{{url('/')}}" class="simple-text logo-normal">
           <!-- Hotel Booking -->
           <div class="logo-image-big">
@@ -17,15 +13,8 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-        <!-- @if(Session::get('chat_admin')->role =='admin')
-          <li class="active ">
-            <a href="{{url('/dashboard')}}">
-              <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          @endif -->
-          @if(Session::get('chat_admin')->role =='admin' || Session::get('chat_admin')->role =='a')
+   
+         
           <li>
             <a href="#home"  data-toggle="collapse"  role="button" aria-expanded="false" aria-controls="home">
               <!-- <i class="fa fa-home"></i> -->
@@ -65,7 +54,7 @@
             </ul>
 
           </li>
-           @endif
+           
         </ul>
       </div>
     </div>

@@ -1,5 +1,6 @@
 @extends('admin.layouts.master')
 @section('content')
+
   <div class="wrapper">
     <div class="main-panel">
       <!-- Navbar -->
@@ -55,7 +56,7 @@
               <div class="col-md-12 mb-20">
                 <form class="form-inline pull-left" action="">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="keyword" placeholder="Search">
+                    <input type="text" class="form-control" id="keyword" placeholder="Search" onkeyup="searchByname(this.value)">
                   </div>
                   <div class="form-group">
                     <select class="form-control">
@@ -64,23 +65,27 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <select class="form-control">
-                      <option>teams</option>
-                      <option>Sp-Interior</option>
-                    </select>
+                    <select name="team" id="" class="form-control" onchange="teams(this);">
+                            <option value="">Select Team</option>
+                            @foreach(Feed::teams() as $team)
+                         <option value="{{$team->id}}">{{$team->name}}</option>
+                            @endforeach
+                          </select>
                   </div>
                   <div class="form-group">
-                    <select class="form-control">
-                      <option>Roles</option>
-                      <option>Salespersonr</option>
-                    </select>
+                      <select name="role" id="input1/(\w+)/\u\1/g" class="form-control" onchange="postion(this);">
+                            <option value="">Select Role</option>
+                            @foreach(Feed::roles() as $role)
+                            <option value="{{$role->id}}">{{$role->name}}</option>
+                            @endforeach
+                          </select>
                   </div>
                   <!-- <button type="submit" class="btn btn-default">Submit</button> -->
                 </form>
                 <p class="pull-right mb-0" style="line-height: 36px">22 founds in 115 publications</p>
               </div>
             </div>
-            <div class="card">
+            <div class="card" id="showresponce">
               <!-- <div class="card-header">
                 <h4 class="card-title"> Jobs List</h4>
               </div> -->
@@ -97,51 +102,43 @@
                       <th colspan="3">Roles</th>
                       <th colspan="3">Targeted Audience</th>
                       <th colspan="3">Likes</th>
-                      <th colspan="3">blank_field</th>
+                      <th colspan="3">Dislike</th>
                       <th colspan="3">blank_field</th>
                       <th colspan="3">blank_field</th>
                       
                     </thead>
                     <tbody>
+                    @foreach($posts as $post)
                       <tr>
                         <td class="text-right">
                           <a href=""><i class="fa fa-edit text-primary"></i></a>
-                          <a href=""> <i class="fa fa-trash text-danger"></i> </a>
+                          <a href="{{ url('dashboard/deletepost/'.$post->id) }}"> <i class="fa fa-trash text-danger"></i> </a>
                           <a href=""><i class="fa fa-eye text-success"></i></a>
                         </td>
-                        <td colspan="2"> <img src="{{asset('frontend-assets/dashboard/img/faces/abc1.jpg')}}" height="70px" width="60px" class="pull-left"> 
-                          <span class="pl-10" style="display: flex;">Abc title of news</span>
+                             <?php
+                        $cover_image=url('frontend-assets/dashboard/img/faces/abc1.jpg');
+                        if($post->cover_image){
+                            $cover_image=$post->cover_image;
+                        }else{
+                          $cover_image=url('frontend-assets/dashboard/img/faces/abc1.jpg');
+                        }
+
+                        ?>
+                        <td colspan="2"> <img src="{{ $cover_image}}" height="70px" width="60px" class="pull-left"> 
+                          <span class="pl-10" style="display: flex;">{{$post->title}}</span>
                         </td>
-                        <td colspan="2"> 14/01/2020 12:17</td>
-                        <td colspan="3"> Sp-Interior</td>
-                        <td colspan="3"> Salesperson. Head of sector</td>
+                        <td colspan="2"> {{$post->created_at}}</td>
+                        <td colspan="3"> {{$post->t_name}}</td>
+                        <td colspan="3"> {{$post->p_name}}</td>
                         <td colspan="3"> 2812</td>
-                        <td colspan="3"> 205</td>
-                        <td colspan="3"> -</td>
+                        <td colspan="3"> {{$post->likes}}</td>
+                        <td colspan="3"> {{$post->dislikes}}</td>
                         <td colspan="3"> -</td>
                         <td colspan="3"> -</td>
                         
                       </tr>
-                      <tr>
-                        <td class="text-right">
-                          <a href=""><i class="fa fa-edit text-primary"></i></a>
-                          <a href=""> <i class="fa fa-trash text-danger"></i> </a>
-                          <a href=""><i class="fa fa-eye text-success"></i></a>
-                        </td>
-                        <td colspan="2"> <img src="{{asset('frontend-assets/dashboard/img/faces/abc2.jpg')}}" height="70px" width="60px" class="pull-left"> 
-                          <span class="pl-10" style="display: flex;">every news has different tile either more then 50 character</span>
-                        </td>
-                        <td colspan="2"> 14/01/2020 12:17</td>
-                        <td colspan="3"> Sp-Interior</td>
-                        <td colspan="3"> Salesperson. Head of sector</td>
-                        <td colspan="3"> 2812</td>
-                        <td colspan="3"> 205</td>
-                        <td colspan="3"> -</td>
-                        <td colspan="3"> -</td>
-                        <td colspan="3"> -</td>
-                        
-                      </tr>
-                     
+                      @endforeach
+                      
                     </tbody>
                   </table>
                 </div>
@@ -155,5 +152,61 @@
 @endsection
 
 @section('script')
+<script>
+function teams(data){
+ var id =data.value;
+  $.ajax({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'get',
+          url: "{{url('dashboard/teamsearch/')}}/"+id,
+         success: function (response) {
+console.log(response);
+          $('#showresponce').html(response);
+         
 
+        }
+
+     });
+}
+
+
+function postion(data){
+ var id =data.value;
+  $.ajax({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'get',
+          url: "{{url('dashboard/postionsearch/')}}/"+id,
+         success: function (response) {
+         console.log(response);
+          $('#showresponce').html(response);
+         
+
+        }
+
+     });
+}
+
+function searchByname(searchkeyword){
+  // alert(searchkeyword);
+    $.ajax({
+      headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'post',
+          url: "{{url('/dashboard/search')}}",
+          data: {
+            "searchkeyword": searchkeyword
+            },
+          success: function (response) {
+              $('#showresponce').html(response);
+
+          }
+        });
+  }
+  
+</script>
 @endsection

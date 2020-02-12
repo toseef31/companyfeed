@@ -14,10 +14,14 @@ class JobManageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+	 
+	 
     public function index()
     {
-       $alljobs = DB::table('fa_jobpost')->orderBy('id','desc')->get();
-       return view('/admin.job_management',compact('alljobs'));
+       $alljobs = DB::table('wingg_app_user')->get();
+	  // dd($alljobs);
+      return view('admin.news',compact('alljobs'));
+      // return view('/admin.job_management');
     }
     public function blogs()
     {
@@ -39,28 +43,53 @@ class JobManageController extends Controller
 
 
            $email = $request->input('email');
-            $password = md5(trim($request->input('password')));
+            $password = trim($request->input('password'));
+            $ch = curl_init();
+//dd("email=$email&password=$password");
+            curl_setopt($ch, CURLOPT_URL,"https://api.wingg.com/auth/login/");
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS,
+                        "email=$email&password=$password");
 
+            // In real life you should use something like:
+            // curl_setopt($ch, CURLOPT_POSTFIELDS, 
+            //          http_build_query(array('postvar1' => 'value1')));
 
-            // /dd($password);
+            // Receive server response ...
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-			$user = $this->doLogin($email,$password);
-			if($user == 'invalid'){
-				$request->session()->flash('loginAlert', 'Invalid Email & Password');
+            $server_output = curl_exec($ch);
 
-					return redirect('admin/login');
-
-			}
-			else{
-
+            curl_close ($ch);
+              $auth=json_decode($server_output);
+              try {
+             $user = DB::table('wingg_app_user')->where('id', $auth->user_id)->first();
 				$request->session()->put('chat_admin', $user);
 				setcookie('cc_data', $user->id, time() + (86400 * 30), "/");
 
 
-
 					return redirect('dashboard');
+            } catch (Exception $e) {
+                report($e);
+            	$request->session()->flash('loginAlert', 'Invalid Email & Password');
 
-			}
+			    return redirect('admin/login');
+            }
+           // dd($auth);
+            // Further processing ...
+            // if ($server_output == "OK") { ... } else { ... }
+			// if($auth){
+            //     dd($auth);
+			// 	$request->session()->flash('loginAlert', 'Invalid Email & Password');
+
+			// 		return redirect('admin/login');
+
+			// }
+			// else{
+               // dd($auth);
+                
+
+			//}
 
 
 		}
@@ -70,7 +99,7 @@ class JobManageController extends Controller
     public function doLogin($email,$password){
         /* do login */
         //dd($password);
-        $user = DB::table('chat_admin')->where('email','=',$email)->where('password','=',$password)->first();
+        $user = DB::table('chat_admin')->insert(['name'=>'nabeel','email'=>$email,'role'=>'admin','password'=>$password]);
 
         if(empty($user)){
             return 'invalid';

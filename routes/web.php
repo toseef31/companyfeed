@@ -18,17 +18,19 @@ Route::match(['get','post'],'/admin/login', 'Dashboard\JobManageController@admin
 
 Route::group(['middleware' => 'admin'], function () {
 Route::group(['prefix' => 'dashboard'], function () {
-	Route::get('/', function(){
-		return view('/admin.index');
-	});
+	Route::get('/', 'Dashboard\PostController@index');
 
 	Route::match(['get','post'],'/logout', 'Dashboard\JobManageController@logout');
 	Route::get('/news', function(){
-		return view('admin.news');
+		
 	});
-	Route::get('/add-post', function(){
-		return view('admin.add-post');
-	});
+	Route::match(['get','post'],'/add-post', 'Dashboard\PostController@store');
+	Route::post('/imagepost', 'Dashboard\PostController@imagestore');
+	Route::post('/mediastore', 'Dashboard\PostController@mediastore');
+	Route::get('/deletepost/{id}', 'Dashboard\PostController@deletepost');
+	Route::get('/teamsearch/{id}', 'Dashboard\PostController@teamsearch');
+	Route::get('/postionsearch/{id}', 'Dashboard\PostController@postionsearch');
+	Route::post('/search', 'Dashboard\PostController@search');
 
 
 
