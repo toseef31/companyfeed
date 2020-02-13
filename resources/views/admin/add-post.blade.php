@@ -247,7 +247,13 @@ init: function () {
     //formData.append('userName', 'bob');
    });
     myDropzone.processQueue();
+    window.setTimeout(function(){
 
+        // Move to a new location or you can do something else
+        window.location.href = "{{url('/dashboard')}}";
+
+    }, 10000);
+     
   });
    
  }

@@ -22,7 +22,7 @@ class PostController extends Controller
         ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
         ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
         ->where('wingg_app_user.id','=',$user_id)->get();
-        //dd($posts);
+       //dd($posts);
         return view('admin.news',compact('posts'));
     }
 
@@ -60,7 +60,7 @@ class PostController extends Controller
             $profilePicture = 'cover_image-'.time().'-'.rand(000000,999999).'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('cover/images');
             $image->move($destinationPath, $profilePicture);
-            $imagepath='http://203.99.61.173/demos/boarding_system/cover/images/'.$profilePicture;
+            $imagepath='http://phplaravel-355796-1161525.cloudwaysapps.com/cover/images/'.$profilePicture;
             $input['cover_image']=$imagepath;
             }
         
@@ -73,6 +73,8 @@ class PostController extends Controller
            $position['position_id']=$request->input('role');
            $position['post_id']=$post_id;
            $wingg_app_postposition=DB::table('wingg_app_postposition')->insertGetId($position);
+           $request->session()->flash('post', 'Post Create Sussessfully');
+            return redirect('/dashboard');
         }
        return view('admin.add-post');
     }
@@ -96,7 +98,7 @@ public function imagestore(Request $request)
             $profilePicture = 'cover_image-'.time().'-'.rand(000000,999999).'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('cover/images');
             $image->move($destinationPath, $profilePicture);
-            $imagepath='http://203.99.61.173/demos/boarding_system/cover/images/'.$profilePicture;
+            $imagepath='http://phplaravel-355796-1161525.cloudwaysapps.com/cover/images/'.$profilePicture;
             $input['cover_image']=$imagepath;
             }
 
@@ -104,7 +106,7 @@ public function imagestore(Request $request)
             $profilePictures = 'cover_image-'.time().'-'.rand(000000,999999).'.'.$file->getClientOriginalExtension();
             $destinationPaths = public_path('cover/images');
             $file->move($destinationPaths, $profilePictures);
-            $imagepaths='http://203.99.61.173/demos/boarding_system/cover/images/'.$profilePictures;
+            $imagepaths='http://phplaravel-355796-1161525.cloudwaysapps.com/cover/images/'.$profilePictures;
             $input['image_url']=$imagepaths;
             }
         
@@ -117,6 +119,8 @@ public function imagestore(Request $request)
            $position['position_id']=$request->input('role');
            $position['post_id']=$post_id;
            $wingg_app_postposition=DB::table('wingg_app_postposition')->insertGetId($position);
+            $request->session()->flash('post', 'Post Create Sussessfully');
+            //return redirect('/dashboard');
         }
        return view('admin.add-post');
     }
@@ -140,7 +144,7 @@ public function imagestore(Request $request)
             $profilePicture = 'cover_image-'.time().'-'.rand(000000,999999).'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('cover/images');
             $image->move($destinationPath, $profilePicture);
-            $imagepath='http://203.99.61.173/demos/boarding_system/cover/images/'.$profilePicture;
+            $imagepath='http://phplaravel-355796-1161525.cloudwaysapps.com/cover/images/'.$profilePicture;
             $input['cover_image']=$imagepath;
             }
         
@@ -153,6 +157,8 @@ public function imagestore(Request $request)
            $position['position_id']=$request->input('role');
            $position['post_id']=$post_id;
            $wingg_app_postposition=DB::table('wingg_app_postposition')->insertGetId($position);
+            $request->session()->flash('post', 'Post Create Sussessfully');
+            return redirect('/dashboard');
         }
        return view('admin.add-post');
     }
@@ -167,7 +173,7 @@ public function imagestore(Request $request)
         DB::table('wingg_app_postteam')->where('post_id',$id)->delete();
         DB::table('wingg_app_postposition')->where('post_id',$id)->delete();
         DB::table('wingg_app_post')->where('id',$id)->delete();
-        $request->session()->flash('delnum', 'Number delete Successfully');
+        $request->session()->flash('delnum', 'Post delete Successfully');
         return redirect('/dashboard');
     }
 

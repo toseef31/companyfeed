@@ -51,6 +51,7 @@
 </div> -->
       <div class="content">
         <div class="row">
+         
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-12 mb-20">
@@ -85,11 +86,27 @@
                 <p class="pull-right mb-0" style="line-height: 36px">22 founds in 115 publications</p>
               </div>
             </div>
+            @if(Session::has('post'))
+               <div class="alert alert-success">
+                  {{ Session::get('post') }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               @endif
+               @if(Session::has('delnum'))
+               <div class="alert alert-success">
+                  {{ Session::get('delnum') }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               @endif
             <div class="card" id="showresponce">
               <!-- <div class="card-header">
                 <h4 class="card-title"> Jobs List</h4>
               </div> -->
-
+ 
               <div class="card-body">
                 <div class="table-responsive">
                 
