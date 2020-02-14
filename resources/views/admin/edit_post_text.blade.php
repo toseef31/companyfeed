@@ -19,7 +19,7 @@
             <span class="navbar-toggler-bar bar3"></span>
             </button>
           </div>
-          <a class="navbar-brand" href="#pablo"><strong>New Post</strong></a><br>
+          <a class="navbar-brand" href="#pablo"><strong>Edit Post</strong></a><br>
           <span>Publish news in text, image, video format or an external link</span>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,12 +63,6 @@
                     <li role="presentation" class="active">
                       <a href="#text" aria-controls="home" role="tab" data-toggle="tab"> <i class="fa fa-file" aria-hidden="true"></i> Text</a>
                     </li>
-                    <!-- <li role="presentation">
-                      <a href="#image" aria-controls="image" role="tab" data-toggle="tab"> <i class="fa fa-file-image-o" aria-hidden="true"></i> Image</a>
-                    </li>
-                    <li role="presentation">
-                      <a href="#external_links" aria-controls="external_links" role="tab" data-toggle="tab"> <i class="fa fa-link" aria-hidden="true"></i> External Link</a>
-                    </li> -->
                   </ul>
                 
                   <!-- Tab panes -->
@@ -113,97 +107,6 @@
                         </div>
                       </form>
                     </div>
-                    <!-- <div role="tabpanel" class="tab-pane" id="image">
-                      <form method="post" action="" enctype="multipart/form-data" id="freelistingForm">
-                      {{ csrf_field() }}
-                       <div class="form-group">
-                          <select name="team" id="" class="form-control" required="required">
-                            <option value="">Select Team</option>
-                            @foreach(Feed::teams() as $team)
-                         <option value="{{$team->id}}">{{$team->name}}</option>
-                            @endforeach
-                          </select>
-                        
-                      </div>
-                       <div class="form-group">
-                          <select name="role" id="input1/(\w+)/\u\1/g" class="form-control" required="required">
-                            <option value="">Select Role</option>
-                            @foreach(Feed::roles() as $role)
-                            <option value="{{$role->id}}">{{$role->name}}</option>
-                            @endforeach
-                          </select>
-                        
-                      </div>
-                        <div class="form-group">
-                          <input type="text" name="post_title" class="form-control" placeholder="Title">
-                        </div>
-                        <div class="input-field">
-                          <label class="active">Photos</label>
-                          
-                        </div>
-                        <div class="form-group pull-left" style="margin-top: 211px;">
-                            <input type="text" name="file_name_image" id="file_name_image" placeholder="Insert a cover image (mandatory)">
-                            <label for="insert-cover">
-                              <button class="btn btn-default">Insert</button>
-                            <input type="file" name="cover_image" id="insert-image" onchange="document.getElementById('file_name_image').value = this.value.split('\\').pop().split('/').pop()">
-                            </label>
-                        </div>
-                        
-                      </form>
-                       <div class="formbody">
-                          <img src="{{asset('/frontend-assets/gif/loader.gif')}}" style="display:none; width: 13%;left: 43%;" class="loader" id="gifid">
-                          <div class="form-group">
-                            <div class="row" style="display: block;flex-wrap: wrap; margin-right: -15px;margin-left: -15px;">
-                              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                                <div class="dorgz" style="position: relative;height: 300px;">
-                                  <form id='frmTarget' name='dropzone' action="{{url('dashboard/imagepost')}}" class="dropzone" >{{ csrf_field() }}
-                                  </form>
-                                  <button type="button " class="btn btn-large btn-block btn-success" id="buttonfree" style="float: right;width: 15%;font-size: 17px;font-weight: bolder;margin-top: 58px;">Submit</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="external_links">
-                      <form method="post" action="{{ url('dashboard/mediastore') }}" enctype="multipart/form-data">
-                      {{ csrf_field() }}
-                       <div class="form-group">
-                          <select name="team" id="" class="form-control" required="required">
-                            <option value="">Select Team</option>
-                            @foreach(Feed::teams() as $team)
-                         <option value="{{$team->id}}">{{$team->name}}</option>
-                            @endforeach
-                          </select>
-                        
-                      </div>
-                       <div class="form-group">
-                          <select name="role" id="input1/(\w+)/\u\1/g" class="form-control" required="required">
-                            <option value="">Select Role</option>
-                            @foreach(Feed::roles() as $role)
-                            <option value="{{$role->id}}">{{$role->name}}</option>
-                            @endforeach
-                          </select>
-                        
-                      </div>
-                        <div class="form-group">
-                          <input type="text" name="post_title" class="form-control" placeholder="Title">
-                        </div>
-                        <div class="form-group">
-                          <input type="text" name="link" class="form-control" placeholder="Copy and paste the page link (URL) here">
-                        </div>
-                        <div class="form-group pull-left">
-                            <input type="text" name="" id="file_name_links" placeholder="Insert a cover image (optional)">
-                            <label for="insert-cover">
-                              <button class="btn btn-default">Insert</button>
-                            <input type="file" name="cover_image" id="insert-cover" onchange="document.getElementById('file_name_links').value = this.value.split('\\').pop().split('/').pop()">
-                            </label>
-                        </div>
-                        <div class="form-group pull-right">
-                          <input type="submit" class="btn btn-primary" name="PUBLISH">
-                        </div>
-                      </form>
-                    </div> -->
                   </div>
                 </div>
               </div>
