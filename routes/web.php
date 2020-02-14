@@ -47,8 +47,15 @@ Route::group(['prefix' => 'dashboard'], function () {
 	Route::post('/mark', 'Dashboard\JobManageController@mark');
 	Route::match(['get','post'],'/jobstatus_update/{id}', 'Dashboard\JobManageController@jobstatus_update');
 
-	Route::get('/icons', function(){
-		return view('/admin.icons');
+
+	Route::get('/edit-post-image', function(){
+		return view('/admin.edit_post_image');
+	});
+	Route::get('/edit-post-text', function(){
+		return view('/admin.edit_post_text');
+	});
+	Route::get('/edit-post-link', function(){
+		return view('/admin.edit_post_link');
 	});
 	Route::get('/add_tamplate', function(){
 		return view('/admin.add_tamplate');
