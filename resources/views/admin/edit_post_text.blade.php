@@ -72,28 +72,27 @@
                       {{ csrf_field() }}
                       <div class="form-group">
                           <select name="team" id="" class="form-control" required="required">
-                            <option value="">Select Team</option>
-                            @foreach(Feed::teams() as $team)
-                         <option value="{{$team->id}}">{{$team->name}}</option>
-                            @endforeach
+                            
+                              @foreach(Feed::teams() as $team)
+                              <option value="{{$team->id}}"<?php if(!empty($post->t_name)) echo ($team->name == $post->t_name) ? 'Selected' : '' ?> >{{$team->name}}</option>
+                              @endforeach
                           </select>
                         
                       </div>
                        <div class="form-group">
                           <select name="role" id="input1/(\w+)/\u\1/g" class="form-control" required="required">
-                            <option value="">Select Role</option>
                             @foreach(Feed::roles() as $role)
-                            <option value="{{$role->id}}">{{$role->name}}</option>
+                            <option value="{{$role->id}}"<?php if(!empty($post->p_name)) echo ($post->p_name == $role->name) ? 'Selected' : '' ?> >{{$role->name}}</option>
                             @endforeach
                           </select>
                         
                       </div>
                       
                         <div class="form-group">
-                          <input type="text" name="post_title" class="form-control" placeholder="Title">
+                          <input type="text" name="post_title" class="form-control" placeholder="Title" value="{{$post->title}}">
                         </div>
                         <div class="form-group">
-                          <textarea rows="100" cols="70" class="ckeditor" id="editor" name="post_description" placeholder="Description...." required>{{ old('job_description') }}</textarea>
+                          <textarea rows="100" cols="70" class="ckeditor" id="editor" name="post_description" placeholder="Description...." required>{{ $post->content }}</textarea>
                         </div>
                         <div class="form-group pull-left">
                             <input type="text" name="" id="file_name" placeholder="Insert a cover image (optional)">
@@ -128,40 +127,6 @@
 <script>
 
 
-Dropzone.options.frmTarget = {
-autoProcessQueue: false,
-parallelUploads: 1,
-addRemoveLinks: true,
-url: "{{ url('dashboard/imagepost')}}",
-init: function () {
-
-  var myDropzone = this;
-
-  $("#buttonfree").click(function (e) {
-    //alert('hello');
-    e.preventDefault();
-    var data = $('form#freelistingForm').serializeArray();
-    console.log(data);
-     myDropzone.on('sending', function(file, xhr, formData){
-       for (var i=0; i<data.length; i++){
-           formData.append(data[i].name, data[i].value);
-       }
-       formData.append('cover_image', $('#insert-image')[0].files[0]);
-    //formData.append('userName', 'bob');
-   });
-    myDropzone.processQueue();
-    window.setTimeout(function(){
-
-        // Move to a new location or you can do something else
-        window.location.href = "{{url('/dashboard')}}";
-
-    }, 10000);
-     
-  });
-   
- }
-}
- 
 
   $('.nav-tabs').on('click', 'li', function() {
       $('.nav-tabs li.active').removeClass('active');

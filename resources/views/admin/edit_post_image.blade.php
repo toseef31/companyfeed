@@ -6,6 +6,7 @@
 
 @endsection
 @section('content')
+
 <div class="wrapper">
   <div class="main-panel">
     <!-- Navbar -->
@@ -73,24 +74,22 @@
                       {{ csrf_field() }}
                        <div class="form-group">
                           <select name="team" id="" class="form-control" required="required">
-                            <option value="">Select Team</option>
                             @foreach(Feed::teams() as $team)
-                         <option value="{{$team->id}}">{{$team->name}}</option>
+                            <option value="{{$team->id}}"<?php if(!empty($post->t_name)) echo ($team->name == $post->t_name) ? 'Selected' : '' ?> >{{$team->name}}</option>
                             @endforeach
                           </select>
                         
                       </div>
                        <div class="form-group">
                           <select name="role" id="input1/(\w+)/\u\1/g" class="form-control" required="required">
-                            <option value="">Select Role</option>
                             @foreach(Feed::roles() as $role)
-                            <option value="{{$role->id}}">{{$role->name}}</option>
+                            <option value="{{$role->id}}"<?php if(!empty($post->p_name)) echo ($post->p_name == $role->name) ? 'Selected' : '' ?> >{{$role->name}}</option>
                             @endforeach
                           </select>
-                        
+                          
                       </div>
                         <div class="form-group">
-                          <input type="text" name="post_title" class="form-control" placeholder="Title">
+                          <input type="text" name="post_title" class="form-control" placeholder="Title" value="{{$post->title}}">
                         </div>
                         <div class="input-field">
                           <label class="active">Photos</label>
@@ -111,7 +110,7 @@
                             <div class="row" style="display: block;flex-wrap: wrap; margin-right: -15px;margin-left: -15px;">
                               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                                 <div class="dorgz" style="position: relative;height: 300px;">
-                                  <form id='frmTarget' name='dropzone' action="{{url('dashboard/imagepost')}}" class="dropzone" >{{ csrf_field() }}
+                                  <form id='frmTarget' name='dropzone' action="{{ url('/dashboard/edit-post-image/'.$post->id)}}" class="dropzone" >{{ csrf_field() }}
                                   </form>
                                   <button type="button " class="btn btn-large btn-block btn-success" id="buttonfree" style="float: right;width: 15%;font-size: 17px;font-weight: bolder;margin-top: 58px;">Submit</button>
                                 </div>
@@ -145,10 +144,38 @@ Dropzone.options.frmTarget = {
 autoProcessQueue: false,
 parallelUploads: 1,
 addRemoveLinks: true,
-url: "{{ url('dashboard/imagepost')}}",
+url: "{{ url('/dashboard/edit-post-image/'.$post->id)}}",
 init: function () {
 
   var myDropzone = this;
+  this.on("addedfile", function(file) {
+
+    // Create the remove button
+    var removeButton = Dropzone.createElement('<a  href="javascript:undefined;" style="margin-left: 22px;">Remove file</a>');
+    var _this = this;
+    
+  });
+  var proimage=  "{{$post->image_url}}";
+  console.log(proimage);
+
+    //  console.log(imgurl);
+
+    //  alert(imgpath);
+    var mockFile = { name: proimage, size: 12345 };
+
+    myDropzone.emit("addedfile", mockFile);
+
+    myDropzone.emit("thumbnail", mockFile, proimage);
+
+    myDropzone.createThumbnailFromUrl(
+      mockFile,
+      function(thumbnail) {
+
+
+      }
+    )
+
+
 
   $("#buttonfree").click(function (e) {
     //alert('hello');

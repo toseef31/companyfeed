@@ -32,6 +32,13 @@ Route::group(['prefix' => 'dashboard'], function () {
 	Route::get('/postionsearch/{id}', 'Dashboard\PostController@postionsearch');
 	Route::post('/search', 'Dashboard\PostController@search');
 
+	Route::match(['get','post'], 'edit-post-text/{id}', 'Dashboard\PostController@editPost');
+	Route::match(['get','post'], 'edit-post-image/{id}', 'Dashboard\PostController@editPostImage');
+	Route::match(['get','post'], 'edit-post-link/{id}', 'Dashboard\PostController@editPostLink');
+
+	Route::get('posts', 'Dashboard\PostController@showPosts');
+	Route::get('team-post/{id}', 'Dashboard\PostController@teamPost');
+	Route::get('roles-post/{id}', 'Dashboard\PostController@postionPost');
 
 
 	Route::get('/job_management', 'Dashboard\JobManageController@index');
@@ -48,15 +55,15 @@ Route::group(['prefix' => 'dashboard'], function () {
 	Route::match(['get','post'],'/jobstatus_update/{id}', 'Dashboard\JobManageController@jobstatus_update');
 
 
-	Route::get('/edit-post-image', function(){
-		return view('/admin.edit_post_image');
-	});
-	Route::get('/edit-post-text', function(){
-		return view('/admin.edit_post_text');
-	});
-	Route::get('/edit-post-link', function(){
-		return view('/admin.edit_post_link');
-	});
+	// Route::get('/edit-post-image', function(){
+	// 	return view('/admin.edit_post_image');
+	// });
+	// Route::get('/edit-post-text', function(){
+	// 	return view('/admin.edit_post_text');
+	// });
+	// Route::get('/edit-post-link', function(){
+	// 	return view('/admin.edit_post_link');
+	// });
 	Route::get('/add_tamplate', function(){
 		return view('/admin.add_tamplate');
 	});
