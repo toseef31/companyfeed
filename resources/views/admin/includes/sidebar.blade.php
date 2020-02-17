@@ -3,7 +3,7 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-       
+
         <a href="{{url('/')}}" class="simple-text logo-normal">
           <!-- Hotel Booking -->
           <div class="logo-image-big">
@@ -13,8 +13,8 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-   
-         
+
+
           <li>
             <a href="{{url('/dashboard')}}">
               <!-- <i class="fa fa-home"></i> -->
@@ -24,8 +24,8 @@
 
           <li><a href="#created_at" data-toggle="collapse"  role="button" aria-expanded="false" aria-controls="created_at">Created at</a>
             <ul class="collapse show" id="created_at">
-              <li><a href="{{url('dashboard/posts?date=1 day')}}">today</a></li>
-              <li><a href="{{url('dashboard/posts?date=2 day')}}">Yesterday</a></li>
+              <li><a href="{{url('dashboard/posts?date=today')}}">today</a></li>
+              <li><a href="{{url('dashboard/posts?date=1 day')}}">Yesterday</a></li>
               <li><a href="{{url('dashboard/posts?date=1 week')}}">Last week</a></li>
               <li><a href="{{url('dashboard/posts?date=15 days')}}">Last 15 days</a></li>
               <li><a href="{{url('dashboard/posts?date=1 month')}}">Last month</a></li>
@@ -52,7 +52,7 @@
               @endforeach
             </ul>
           </li>
-           
+
         </ul>
       </div>
     </div>

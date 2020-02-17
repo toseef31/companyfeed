@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $user_id=$request->session()->get('chat_admin')->id;
+      $user_id=$request->session()->get('chat_admin')->id;
         $posts=DB::table('wingg_app_post')->select('wingg_app_post.*','wingg_app_position.name AS p_name','wingg_app_team.name AS t_name')
         ->join('wingg_app_user','wingg_app_user.company_id','=','wingg_app_post.company_id')
         ->join('wingg_app_postteam','wingg_app_postteam.post_id','=','wingg_app_post.id')
@@ -25,21 +25,22 @@ class PostController extends Controller
         ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
         ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
         ->where('wingg_app_user.id','=',$user_id)->get();
-       //dd($posts);
+       // dd($posts);
         return view('admin.news',compact('posts'));
     }
 
     public function showPosts(Request $request)
     {
         $date = $_GET['date'];
-
+        // dd($date);
       if ($date !="") {
         $getcurrentday = date("Y-m-d h:i:s");
+        if ($date == "today") {
+          $gettoday = date("Y-m-d");
+          // dd($gettoday);
+        }
         if ($date == "1 day") {
           $get_date = date('Y-m-d h:i:s', strtotime('-1 day', strtotime($getcurrentday)));
- 
-        }elseif ($date == '2 day') {
-          $get_date = date('Y-m-d h:i:s', strtotime('-2 day', strtotime($getcurrentday)));
         }elseif ($date == '1 week') {
           $get_date = date('Y-m-d h:i:s', strtotime('-1 week', strtotime($getcurrentday)));
         }elseif ($date == '15 days') {
@@ -54,34 +55,27 @@ class PostController extends Controller
         }
       }
 
-      //dd($get_date .'/'. $getcurrentday);
+      // dd($get_date .'/'. $getcurrentday);
       $user_id=$request->session()->get('chat_admin')->company_id;
        $posts=DB::table('wingg_app_post')->select('wingg_app_post.*','wingg_app_position.name AS p_name','wingg_app_team.name AS t_name')
        ->join('wingg_app_postteam','wingg_app_postteam.post_id','=','wingg_app_post.id')
        ->join('wingg_app_postposition','wingg_app_postposition.post_id','=','wingg_app_post.id')
        ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
        ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
-       ->where('wingg_app_post.company_id','=',$user_id)->whereBetween('wingg_app_post.created_at',[$get_date, $getcurrentday])->get();
-      //dd($posts);
+       ->where('wingg_app_post.company_id','=',$user_id);
+       if ($date =='today' && $gettoday !='') {
+         // $gettoday ='2020-02-13';
+         $posts->where('wingg_app_post.created_at','like','%'.$gettoday.'%');
+       }elseif ($get_date != '' && $getcurrentday != '') {
+         $posts->whereBetween('wingg_app_post.created_at',[$get_date, $getcurrentday]);
+       }
+       $posts=$posts->get();
+      // dd($posts);
        return view('admin.posts',compact('posts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         if($request->isMethod('post')){
@@ -103,7 +97,7 @@ class PostController extends Controller
             $imagepath='http://phplaravel-355796-1161525.cloudwaysapps.com/cover/images/'.$profilePicture;
             $input['cover_image']=$imagepath;
             }
-        
+
            $post_id=DB::table('wingg_app_post')->insertGetId( $input);
 
            $team['team_id']=$request->input('team');
@@ -146,7 +140,7 @@ class PostController extends Controller
 
         $wingg_app_postteam=DB::table('wingg_app_postteam')->where('post_id', $id)->first();
 
-        
+
         $team['team_id'] = $request->input('team');
         DB::table('wingg_app_postteam')->where('id', $wingg_app_postteam->id)->update($team);
 
@@ -201,12 +195,12 @@ class PostController extends Controller
         $imagepaths='http://phplaravel-355796-1161525.cloudwaysapps.com/cover/images/'.$profilePictures;
         $input['image_url']=$imagepaths;
         }
-    
+
        DB::table('wingg_app_post')->where('id', $id)->update($input);
 
         $wingg_app_postteam=DB::table('wingg_app_postteam')->where('post_id', $id)->first();
 
-        
+
         $team['team_id'] = $request->input('team');
         DB::table('wingg_app_postteam')->where('id', $wingg_app_postteam->id)->update($team);
 
@@ -261,12 +255,12 @@ class PostController extends Controller
         $imagepaths='http://phplaravel-355796-1161525.cloudwaysapps.com/cover/images/'.$profilePictures;
         $input['image_url']=$imagepaths;
         }
-    
+
        DB::table('wingg_app_post')->where('id', $id)->update($input);
 
         $wingg_app_postteam=DB::table('wingg_app_postteam')->where('post_id', $id)->first();
 
-        
+
         $team['team_id'] = $request->input('team');
         DB::table('wingg_app_postteam')->where('id', $wingg_app_postteam->id)->update($team);
 
@@ -319,7 +313,7 @@ public function imagestore(Request $request)
             $imagepaths='http://phplaravel-355796-1161525.cloudwaysapps.com/cover/images/'.$profilePictures;
             $input['image_url']=$imagepaths;
             }
-        
+
            $post_id=DB::table('wingg_app_post')->insertGetId( $input);
 
            $team['team_id']=$request->input('team');
@@ -357,7 +351,7 @@ public function imagestore(Request $request)
             $imagepath='http://phplaravel-355796-1161525.cloudwaysapps.com/cover/images/'.$profilePicture;
             $input['cover_image']=$imagepath;
             }
-        
+
            $post_id=DB::table('wingg_app_post')->insertGetId( $input);
 
            $team['team_id']=$request->input('team');
