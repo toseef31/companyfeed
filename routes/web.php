@@ -40,6 +40,7 @@ Route::group(['prefix' => 'dashboard'], function () {
 	Route::get('team-post/{id}', 'Dashboard\PostController@teamPost');
 	Route::get('roles-post/{id}', 'Dashboard\PostController@postionPost');
 
+    Route::get('allcsv', 'Dashboard\PostController@allcsv');
 
 	Route::get('/job_management', 'Dashboard\JobManageController@index');
 	Route::get('/blogs', 'Dashboard\JobManageController@blogs');

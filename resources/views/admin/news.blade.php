@@ -25,7 +25,7 @@
 
             <ul class="navbar-nav">
               <li>
-                <a href="{{url('dashboard/add-post')}}" class="btn top-btn">Download CSV</a>
+                <a href="{{url('dashboard/allcsv')}}" class="btn top-btn">Download CSV</a>
                 <a href="{{url('dashboard/add-post')}}" class="btn btn-primary top-btn">New Post</a>
               </li>
               <li class="nav-item btn-rotate dropdown">
@@ -83,7 +83,7 @@
                   </div>
                   <!-- <button type="submit" class="btn btn-default">Submit</button> -->
                 </form>
-                <p class="pull-right mb-0" style="line-height: 36px">22 founds in 115 publications</p>
+                <p class="pull-right mb-0" style="line-height: 36px">{{$usercount}} founds in {{$allcount}} publications</p>
               </div>
             </div>
             @if(Session::has('post'))
@@ -135,8 +135,8 @@
                           @else
                           <a href="{{url('dashboard/edit-post-link/'.$post->id)}}"><i class="fa fa-edit text-primary"></i></a>
                           @endif
-                          <a href="{{ url('dashboard/deletepost/'.$post->id) }}"> <i class="fa fa-trash text-danger"></i> </a>
-                          <!-- <a href=""><i class="fa fa-eye text-success"></i></a> -->
+                          <a onclick="return confirm('Do you want to delete this item?')" href="{{ url('dashboard/deletepost/'.$post->id) }}"> <i class="fa fa-trash text-danger"></i> </a>
+                          <a href=""><i class="fa fa-eye text-success"></i></a>
                         </td>
                              <?php
                         $cover_image=url('frontend-assets/dashboard/img/faces/abc1.jpg');
