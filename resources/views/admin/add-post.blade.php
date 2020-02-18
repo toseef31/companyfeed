@@ -11,7 +11,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
       <div class="container-fluid">
-        <div class="navbar-wrapper">
+        <div class="navbar-wrapper title-heading">
           <div class="navbar-toggle">
             <button type="button" class="navbar-toggler">
             <span class="navbar-toggler-bar bar1"></span>
@@ -31,7 +31,7 @@
           <ul class="navbar-nav">
             <li class="nav-item btn-rotate dropdown">
               <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                
+
                 <p>
                   <span class="d-lg-none d-md-block">Some Actions</span>
                 </p>
@@ -50,7 +50,7 @@
     <div class="content">
       <div class="row">
         <div class="col-md-12">
-          <div class="card">
+          <div class="card" style="width:70%;">
             <!-- <div class="card-header">
               <h4 class="card-title"> Add User</h4>
             </div> -->
@@ -70,7 +70,7 @@
                       <a href="#external_links" aria-controls="external_links" role="tab" data-toggle="tab"> <i class="fa fa-link" aria-hidden="true"></i> External Link</a>
                     </li>
                   </ul>
-                
+
                   <!-- Tab panes -->
                   <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="text">
@@ -83,7 +83,7 @@
                          <option value="{{$team->id}}">{{$team->name}}</option>
                             @endforeach
                           </select>
-                        
+
                       </div>
                        <div class="form-group">
                           <select name="role" id="input1/(\w+)/\u\1/g" class="form-control" required="required">
@@ -92,9 +92,9 @@
                             <option value="{{$role->id}}">{{$role->name}}</option>
                             @endforeach
                           </select>
-                        
+
                       </div>
-                      
+
                         <div class="form-group">
                           <input type="text" name="post_title" class="form-control" placeholder="Title">
                         </div>
@@ -123,7 +123,7 @@
                          <option value="{{$team->id}}">{{$team->name}}</option>
                             @endforeach
                           </select>
-                        
+
                       </div>
                        <div class="form-group">
                           <select name="role" id="input1/(\w+)/\u\1/g" class="form-control" required="required">
@@ -132,14 +132,14 @@
                             <option value="{{$role->id}}">{{$role->name}}</option>
                             @endforeach
                           </select>
-                        
+
                       </div>
                         <div class="form-group">
                           <input type="text" name="post_title" class="form-control" placeholder="Title">
                         </div>
                         <div class="input-field">
                           <label class="active">Photos</label>
-                          
+
                         </div>
                         <div class="form-group pull-left" style="margin-top: 211px;">
                             <input type="text" name="file_name_image" id="file_name_image" placeholder="Insert a cover image (mandatory)">
@@ -148,7 +148,7 @@
                             <input type="file" name="cover_image" id="insert-image" onchange="document.getElementById('file_name_image').value = this.value.split('\\').pop().split('/').pop()">
                             </label>
                         </div>
-                        
+
                       </form>
                        <div class="formbody">
                           <img src="{{asset('/frontend-assets/gif/loader.gif')}}" style="display:none; width: 13%;left: 43%;" class="loader" id="gifid">
@@ -175,7 +175,7 @@
                          <option value="{{$team->id}}">{{$team->name}}</option>
                             @endforeach
                           </select>
-                        
+
                       </div>
                        <div class="form-group">
                           <select name="role" id="input1/(\w+)/\u\1/g" class="form-control" required="required">
@@ -184,7 +184,7 @@
                             <option value="{{$role->id}}">{{$role->name}}</option>
                             @endforeach
                           </select>
-                        
+
                       </div>
                         <div class="form-group">
                           <input type="text" name="post_title" class="form-control" placeholder="Title">
@@ -221,7 +221,7 @@
   <script src="{{asset('frontend-assets/dashboard/ckeditor/ckeditor.js')}}"></script>
   <script src="{{asset('frontend-assets/dashboard/ckeditor/js/sample.js')}}"></script>
   <script src="{{asset('frontend-assets/dashboard/ckeditor/js/sf.js')}}"></script>
-  
+
 <script>
 
 
@@ -253,12 +253,12 @@ init: function () {
         window.location.href = "{{url('/dashboard')}}";
 
     }, 10000);
-     
+
   });
-   
+
  }
 }
- 
+
 
   $('.nav-tabs').on('click', 'li', function() {
       $('.nav-tabs li.active').removeClass('active');

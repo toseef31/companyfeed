@@ -22,15 +22,15 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
-         
+
             <ul class="navbar-nav">
               <li>
-                <a href="{{url('dashboard/add-post')}}" class="btn">Download CSV</a>
-                <a href="{{url('dashboard/add-post')}}" class="btn btn-primary">New Post</a>
+                <a href="{{url('dashboard/add-post')}}" class="btn top-btn">Download CSV</a>
+                <a href="{{url('dashboard/add-post')}}" class="btn btn-primary top-btn">New Post</a>
               </li>
               <li class="nav-item btn-rotate dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  
+
                   <p>
                     <span class="d-lg-none d-md-block">Some Actions</span>
                   </p>
@@ -39,7 +39,7 @@
                   <a class="dropdown-item" href="{{ url('dashboard/logout') }}">Logout</a>
                 </div>
               </li>
-            
+
             </ul>
           </div>
         </div>
@@ -51,7 +51,7 @@
 </div> -->
       <div class="content">
         <div class="row">
-         
+
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-12 mb-20">
@@ -106,10 +106,10 @@
               <!-- <div class="card-header">
                 <h4 class="card-title"> Jobs List</h4>
               </div> -->
- 
+
               <div class="card-body">
                 <div class="table-responsive">
-                
+
                   <table class="table">
                     <thead>
                       <th colspan="2"></th>
@@ -122,7 +122,7 @@
                       <th colspan="3">Dislike</th>
                       <th colspan="3">blank_field</th>
                       <th colspan="3">blank_field</th>
-                      
+
                     </thead>
                     <tbody>
                     @foreach($posts as $post)
@@ -147,7 +147,7 @@
                         }
 
                         ?>
-                        <td colspan="2"> <img src="{{ $cover_image}}" height="70px" width="60px" class="pull-left"> 
+                        <td colspan="2"> <img src="{{ $cover_image}}" height="70px" width="60px" class="pull-left">
                           <span class="pl-10" style="display: flex;">{{$post->title}}</span>
                         </td>
                         <td colspan="2"> {{$post->created_at}}</td>
@@ -158,10 +158,10 @@
                         <td colspan="3"> {{$post->dislikes}}</td>
                         <td colspan="3"> -</td>
                         <td colspan="3"> -</td>
-                        
+
                       </tr>
                       @endforeach
-                      
+
                     </tbody>
                   </table>
                 </div>
@@ -187,7 +187,7 @@ function teams(data){
          success: function (response) {
 console.log(response);
           $('#showresponce').html(response);
-         
+
 
         }
 
@@ -206,7 +206,7 @@ function postion(data){
          success: function (response) {
          console.log(response);
           $('#showresponce').html(response);
-         
+
 
         }
 
@@ -230,6 +230,6 @@ function searchByname(searchkeyword){
           }
         });
   }
-  
+
 </script>
 @endsection

@@ -63,6 +63,7 @@ class PostController extends Controller
        ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
        ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
        ->where('wingg_app_post.company_id','=',$user_id);
+
        if ($date =='today' && $gettoday !='') {
          // $gettoday ='2020-02-13';
          $posts->where('wingg_app_post.created_at','like','%'.$gettoday.'%');

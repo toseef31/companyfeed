@@ -16,13 +16,20 @@
       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
       <!-- CSS Files -->
-      
+
       <link href="{{asset('/frontend-assets/dashboard/css/bootstrap.min.css')}}" rel="stylesheet" />
       <link href="{{asset('/frontend-assets/dashboard/css/paper-dashboard.css?v=2.0.0')}}" rel="stylesheet" />
       <!-- CSS Just for demo purpose, don't include it in your project -->
-       <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />   
+       <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
       <link href="{{asset('/frontend-assets/dashboard/css/custom.css')}}" rel="stylesheet" />
       <link href="{{asset('/frontend-assets/dashboard/css/style.css')}}" rel="stylesheet" />
+      <link href="http://allfont.net/allfont.css?fonts=roboto-regular" rel="stylesheet" type="text/css" />
+      <style>
+        body {
+          font-family: 'Roboto Regular', arial;
+        }
+        
+      </style>
        @yield('style')
     </head>
   <body>
@@ -36,7 +43,7 @@
 
 
     <!--Scroll to top Button-->
-    
+
     @yield('page-footer')
 
 
@@ -47,7 +54,7 @@
     <script src="{{asset('/frontend-assets/dashboard/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('/frontend-assets/dashboard/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
     <!--  Google Maps Plugin    -->
-   
+
     <!-- Chart JS -->
     <script src="{{asset('/frontend-assets/dashboard/js/plugins/chartjs.min.js')}}"></script>
     <!--  Notifications Plugin    -->
