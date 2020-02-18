@@ -227,6 +227,7 @@
 
 Dropzone.options.frmTarget = {
 autoProcessQueue: false,
+acceptedFiles: ".jpg,.png,.JPEG,.PNG,.mp4,.mkv,.avi",
 parallelUploads: 1,
 addRemoveLinks: true,
 url: "{{ url('dashboard/imagepost')}}",

@@ -74,16 +74,17 @@
 	border-bottom:6px solid #e3336fd1 !important;
 }
 .nav-tabs.nav-justified > li.active > a {
-    border-top:0;
-    border-left:0;
-    border-right:1px solid #fff;
-    background-color:#fff;
+    border-top: 0;
+    border-left: 0;
+    / border-right: 1px solid #fff; /
+    background-color: #fff;
     color: #e3336fd1 !important;
+    background: transparent;
 }
 .nav-tabs.nav-justified > li{
 	width: 33%;
 	text-align: center;
-	padding: 15px;
+	padding: 12px;
 }
 .nav-tabs.nav-justified > li>a{
 	font-size: 20px;

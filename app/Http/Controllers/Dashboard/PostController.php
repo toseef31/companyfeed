@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Carbon\Carbon;
 use DateTime;
+use Response;
 
 class PostController extends Controller
 {
@@ -17,6 +18,8 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+      $allcount=DB::table('wingg_app_post')->count();
+      
       $user_id=$request->session()->get('chat_admin')->id;
         $posts=DB::table('wingg_app_post')->select('wingg_app_post.*','wingg_app_position.name AS p_name','wingg_app_team.name AS t_name')
         ->join('wingg_app_user','wingg_app_user.company_id','=','wingg_app_post.company_id')
@@ -25,8 +28,8 @@ class PostController extends Controller
         ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
         ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
         ->where('wingg_app_user.id','=',$user_id)->get();
-       // dd($posts);
-        return view('admin.news',compact('posts'));
+       $usercount=$posts->count();
+        return view('admin.news',compact('posts','usercount','allcount'));
     }
 
     public function showPosts(Request $request)
@@ -219,7 +222,7 @@ class PostController extends Controller
       ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
       ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
       ->where('wingg_app_postteam.post_id','=',$id)->first();
-      dd($post);
+      //dd($post);
       return view('admin.edit_post_image', compact('post'));
     }
 
@@ -417,10 +420,42 @@ public function imagestore(Request $request)
         ->join('wingg_app_postposition','wingg_app_postposition.post_id','=','wingg_app_post.id')
         ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
         ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
-        ->where('wingg_app_post.title', 'like', '%' . $keyword . '%')->get();
+        ->where('wingg_app_post.title', 'ilike', '%' . $keyword . '%')->get();
         //dd($posts);
          return view('admin.ajaxnews',compact('posts'));
     }
+
+    public function allcsv(Request $request)
+    {
+     $user_id=$request->session()->get('chat_admin')->id;
+        $posts=DB::table('wingg_app_post')->select('wingg_app_post.*','wingg_app_position.name AS p_name','wingg_app_team.name AS t_name')
+        ->join('wingg_app_user','wingg_app_user.company_id','=','wingg_app_post.company_id')
+        ->join('wingg_app_postteam','wingg_app_postteam.post_id','=','wingg_app_post.id')
+        ->join('wingg_app_postposition','wingg_app_postposition.post_id','=','wingg_app_post.id')
+        ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
+        ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
+        ->where('wingg_app_user.id','=',$user_id)->get();
+    $filename = "news.csv";
+    $handle = fopen($filename, 'w+');
+    fputcsv($handle, array('Title', 'Team', 'Roles','Targeted Audience', 'Likes', 'Dislike'));
+
+    foreach($posts as $row) {
+        fputcsv($handle, array($row->title, $row->t_name, $row->p_name,'200',$row->likes, $row->dislikes));
+    }
+
+    fclose($handle);
+
+    $headers = array(
+         'Content-Type' => 'application/vnd.ms-excel; charset=utf-8',
+        'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+        'Content-Disposition' => 'attachment; filename=abc.csv',
+        'Expires' => '0',
+        'Pragma' => 'public',
+    );
+
+    return Response::download($filename, 'news.csv', $headers);
+    }
+
     public function show($id)
     {
         //
