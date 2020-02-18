@@ -64,7 +64,7 @@
                       <a href="#text" aria-controls="home" role="tab" data-toggle="tab"> <i class="fa fa-file" aria-hidden="true"></i> Text</a>
                     </li>
                     <li role="presentation">
-                      <a href="#image" aria-controls="image" role="tab" data-toggle="tab"> <i class="fa fa-file-image-o" aria-hidden="true"></i> Image</a>
+                      <a href="#image" aria-controls="image" role="tab" data-toggle="tab"> <i class="fa fa-file-image-o" aria-hidden="true"></i> Image & Video</a>
                     </li>
                     <li role="presentation">
                       <a href="#external_links" aria-controls="external_links" role="tab" data-toggle="tab"> <i class="fa fa-link" aria-hidden="true"></i> External Link</a>
@@ -77,7 +77,7 @@
                       <form method="post" action="" enctype="multipart/form-data">
                       {{ csrf_field() }}
                       <div class="form-group">
-                          <select name="team" id="" class="form-control" required="required">
+                          <select name="team" id="select_text_team" class="form-control" required="required">
                             <option value="">Select Team</option>
                             @foreach(Feed::teams() as $team)
                          <option value="{{$team->id}}">{{$team->name}}</option>
@@ -99,12 +99,12 @@
                           <input type="text" name="post_title" class="form-control" placeholder="Title">
                         </div>
                         <div class="form-group">
-                          <textarea rows="100" cols="70" class="ckeditor" id="editor" name="post_description" placeholder="Description...." required>{{ old('job_description') }}</textarea>
+                          <textarea rows="100" cols="70" class="tex-editor" id="editor" name="post_description" placeholder="Description...." required>{{ old('job_description') }}</textarea>
                         </div>
                         <div class="form-group pull-left">
                             <input type="text" name="" id="file_name" placeholder="Insert a cover image (optional)">
                             <label for="insert-cover">
-                              <button class="btn btn-default">Insert</button>
+                              <button class="btn btn-default image-btn">Insert</button>
                             <input type="file" name="cover_image" id="insert-cover" onchange="document.getElementById('file_name').value = this.value.split('\\').pop().split('/').pop()">
                             </label>
                         </div>
@@ -117,7 +117,7 @@
                       <form method="post" action="" enctype="multipart/form-data" id="freelistingForm">
                       {{ csrf_field() }}
                        <div class="form-group">
-                          <select name="team" id="" class="form-control" required="required">
+                          <select name="team" id="select_image_team" class="form-control" required="required">
                             <option value="">Select Team</option>
                             @foreach(Feed::teams() as $team)
                          <option value="{{$team->id}}">{{$team->name}}</option>
@@ -144,7 +144,7 @@
                         <div class="form-group pull-left" style="margin-top: 211px;">
                             <input type="text" name="file_name_image" id="file_name_image" placeholder="Insert a cover image (mandatory)">
                             <label for="insert-cover">
-                              <button class="btn btn-default">Insert</button>
+                              <button class="btn btn-default image-btn">Insert</button>
                             <input type="file" name="cover_image" id="insert-image" onchange="document.getElementById('file_name_image').value = this.value.split('\\').pop().split('/').pop()">
                             </label>
                         </div>
@@ -169,7 +169,7 @@
                       <form method="post" action="{{ url('dashboard/mediastore') }}" enctype="multipart/form-data">
                       {{ csrf_field() }}
                        <div class="form-group">
-                          <select name="team" id="" class="form-control" required="required">
+                          <select name="team" id="select_external_team" class="form-control" required="required">
                             <option value="">Select Team</option>
                             @foreach(Feed::teams() as $team)
                          <option value="{{$team->id}}">{{$team->name}}</option>
@@ -195,7 +195,7 @@
                         <div class="form-group pull-left">
                             <input type="text" name="" id="file_name_links" placeholder="Insert a cover image (optional)">
                             <label for="insert-cover">
-                              <button class="btn btn-default">Insert</button>
+                              <button class="btn btn-default image-btn">Insert</button>
                             <input type="file" name="cover_image" id="insert-cover" onchange="document.getElementById('file_name_links').value = this.value.split('\\').pop().split('/').pop()">
                             </label>
                         </div>
@@ -221,9 +221,72 @@
   <script src="{{asset('frontend-assets/dashboard/ckeditor/ckeditor.js')}}"></script>
   <script src="{{asset('frontend-assets/dashboard/ckeditor/js/sample.js')}}"></script>
   <script src="{{asset('frontend-assets/dashboard/ckeditor/js/sf.js')}}"></script>
+  <script src="{{ asset('frontend-assets/tinymce/tinymce.min.js') }}"></script>
 
 <script>
+tinymce.init({
+  selector: '.tex-editor',
+  statusbar: true,
+  setup: function (editor) {
+    editor.on('change', function () {
+      editor.save();
+    });
+  },
+  height: 200,
+  menubar: false,
+  plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table contextmenu paste code',
+    'charactercount'
+  ],
+  toolbar: 'styleselect | bold italic | alignleft aligncenter alignright alignjustify bullist numlist outdent indent | link'
+});
 
+tinymce.PluginManager.add('charactercount', function (editor) {
+  var self = this;
+
+  function update() {
+    editor.theme.panel.find('#charactercount').text(['Characters: {0}', self.getCount()]);
+  }
+
+  editor.on('init', function () {
+    var statusbar = editor.theme.panel && editor.theme.panel.find('#statusbar')[0];
+
+    if (statusbar) {
+      window.setTimeout(function () {
+        statusbar.insert({
+          type: 'label',
+          name: 'charactercount',
+          text: ['Characters: {0}', self.getCount()],
+          classes: 'charactercount',
+          disabled: editor.settings.readonly
+        }, 0);
+
+        editor.on('setcontent beforeaddundo', update);
+
+        editor.on('keyup', function (e) {
+            update();
+        });
+      }, 0);
+    }
+  });
+
+  self.getCount = function () {
+    var tx = editor.getContent({ format: 'raw' });
+    var decoded = decodeHtml(tx);
+    // here we strip all HTML tags
+    var decodedStripped = decoded.replace(/(<([^>]+)>)/ig, "").trim();
+    var tc = decodedStripped.length;
+    return tc;
+  };
+
+  function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  }
+});
 
 Dropzone.options.frmTarget = {
 autoProcessQueue: false,
@@ -260,10 +323,21 @@ init: function () {
  }
 }
 
-
   $('.nav-tabs').on('click', 'li', function() {
       $('.nav-tabs li.active').removeClass('active');
       $(this).addClass('active');
   });
+
+$('#select_text_team').on('change',function () {
+  var team = $(this).val();
+  alert(team);
+  // $('#select_image_team option:contains("'+team+'")');
+//   $('#select_image_team option').filter(function() {
+//     return ($(this).value() == team); //To select Blue
+// }).prop('selected', true);
+// $('#select_image_team option')
+//     .filter(function(i, e) { return $(e).value() == team})
+$('#select_image_team select[name="team"]').val(team).trigger('change');
+});
 </script>
 @endsection

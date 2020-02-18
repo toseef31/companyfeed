@@ -61,11 +61,17 @@
 /*Add New Post*/
 #file_name, #file_name_image, #file_name_links{
 	height: 35px;
+  width: 300px;
   background-color: #FFFFFF;
   border: 1px solid #DDDDDD;
   border-radius: 4px;
   color: #66615b;
   padding: 10px 10px 10px 10px;
+}
+.image-btn {
+	background: transparent;
+	border: 1px solid #63c6bd;
+	color: #63c6bd;
 }
 .nav-tabs.nav-justified{
 	margin-bottom: 20px;
@@ -94,6 +100,9 @@
 		display: block;
     background: transparent;
 }
+.nav-tabs.nav-justified > li>a:hover {
+	text-decoration: none;
+}
 .color-blue {
 	color: #63c6bd;
 }
@@ -105,4 +114,20 @@
 }
 .title-heading strong {
 	text-transform: uppercase;
+}
+/* Optional: Adjust the positioning of the character count text. */
+label.mce-charactercount {
+  margin: 2px 0 2px 2px;
+  padding: 8px;
+}
+
+/* Optional: Remove the html path code from the status bar. */
+.mce-path {
+  display: none !important;
+}
+button, input, optgroup, select, textarea {
+  font-family: 'Roboto Regular', arial !important;
+}
+.dropzone {
+	border: 2px dashed lightgray !important;
 }
