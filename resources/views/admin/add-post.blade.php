@@ -306,7 +306,7 @@ function linkrole(data){
 }
 // Title
 function texttitle(data){
-  alert(data.value);
+  // alert(data.value);
   $("#imagetitledata").val(data.value);
   $("#linktitledata").val(data.value);
 }

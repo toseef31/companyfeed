@@ -20,10 +20,10 @@
                     <tbody>
                     @foreach($posts as $post)
                       <tr>
-                        <td class="text-right">
-                          <a href=""><i class="fa fa-edit" style="color:gray;"></i></a>
-                          <a href="{{ url('dashboard/deletepost/'.$post->id) }}"> <i class="fa fa-trash" style="color:gray;"></i> </a>
-                          <a href=""><i class="fa fa-eye" style="color:gray;"></i></a>
+                        <td class=""style="width: 7%;">
+                          <a href="" style="padding-right: 3px;"><i class="fa fa-edit" style="color:gray"></i></a>
+                          <a href="{{ url('dashboard/deletepost/'.$post->id) }}" style="padding-right: 3px;"> <i class="fa fa-trash" style="color:gray"></i> </a>
+                          <a href="" style="padding-right: 3px;"><i class="fa fa-eye" style="color:gray"></i></a>
                         </td>
                              <?php
                         $cover_image=url('frontend-assets/dashboard/img/faces/abc1.jpg');
