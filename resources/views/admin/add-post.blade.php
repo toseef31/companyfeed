@@ -96,7 +96,7 @@
                       </div>
 
                         <div class="form-group">
-                          <input type="text" name="post_title" class="form-control" placeholder="Title">
+                          <input type="text" name="post_title" class="form-control" placeholder="Title" required>
                         </div>
                         <div class="form-group">
                           <textarea rows="100" cols="70" class="tex-editor" id="editor" name="post_description" placeholder="Description...." required>{{ old('job_description') }}</textarea>
@@ -135,7 +135,7 @@
 
                       </div>
                         <div class="form-group">
-                          <input type="text" name="post_title" class="form-control" placeholder="Title">
+                          <input type="text" name="post_title" class="form-control" placeholder="Title" required>
                         </div>
                         <div class="input-field">
                           <label class="active">Photos</label>
