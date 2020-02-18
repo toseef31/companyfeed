@@ -97,7 +97,7 @@
                       </div>
 
                         <div class="form-group">
-                          <input type="text" name="post_title" id="texttitledata" class="form-control" placeholder="Title" required onkeyup="texttitle(this)">
+                          <input type="text" name="post_title" id="texttitledata" class="form-control" placeholder="Title" required maxlength="130" onkeyup="texttitle(this)">
                         </div>
                         <div class="form-group">
                          <textarea rows="100" cols="70" class="tex-editor" id="editor" name="post_description" placeholder="Description...." required></textarea>
@@ -136,13 +136,13 @@
 
                       </div>
                         <div class="form-group">
-                          <input type="text" name="post_title" id="imagetitledata" class="form-control" placeholder="Title" required onkeyup="imagetitle(this)">
+                          <input type="text" name="post_title" id="imagetitledata" class="form-control" placeholder="Title" required maxlength="130" onkeyup="imagetitle(this)">
                         </div>
                         <div class="input-field">
-                          <label class="active">Photos</label>
+                          <label class="active">Photos & Videos</label>
 
                         </div>
-                        <div class="form-group pull-left" style="margin-top: 211px;">
+                        <div class="form-group pull-left" style="margin-top: 196px;">
                             <input type="text" name="file_name_image" id="file_name_image" placeholder="Insert a cover image (mandatory)">
                             <label for="insert-cover">
                               <button class="btn btn-default image-btn">Insert</button>
@@ -159,7 +159,7 @@
                                 <div class="dorgz" style="position: relative;height: 300px;">
                                   <form id='frmTarget' name='dropzone' action="{{url('dashboard/imagepost')}}" class="dropzone" >{{ csrf_field() }}
                                   </form>
-                                  <button type="button " class="btn btn-large btn-block btn-success" id="buttonfree" style="float: right;width: 15%;font-size: 17px;font-weight: bolder;margin-top: 58px;">Submit</button>
+                                  <button type="button " class="btn btn-primary" id="buttonfree" style="float: right;margin-top: 58px;">Submit</button>
                                 </div>
                               </div>
                             </div>
@@ -188,7 +188,7 @@
 
                       </div>
                         <div class="form-group">
-                          <input type="text" name="post_title" id="linktitledata" class="form-control" placeholder="Title" onkeyup="linktitle(this)" required>
+                          <input type="text" name="post_title" id="linktitledata" class="form-control" placeholder="Title" maxlength="130" onkeyup="linktitle(this)" required>
                         </div>
                         <div class="form-group">
                           <input type="text" name="link" class="form-control" placeholder="Copy and paste the page link (URL) here" required>

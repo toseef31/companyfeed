@@ -24,6 +24,7 @@
       <link href="{{asset('/frontend-assets/dashboard/css/custom.css')}}" rel="stylesheet" />
       <link href="{{asset('/frontend-assets/dashboard/css/style.css')}}" rel="stylesheet" />
       <link href="http://allfont.net/allfont.css?fonts=roboto-regular" rel="stylesheet" type="text/css" />
+      <script src="{{asset('/frontend-assets/dashboard/js/core/jquery.min.js')}}"></script>
       <style>
         body {
           font-family: 'Roboto Regular', arial;
@@ -49,7 +50,7 @@
 
 
     <!--   Core JS Files   -->
-    <script src="{{asset('/frontend-assets/dashboard/js/core/jquery.min.js')}}"></script>
+    
     <script src="{{asset('/frontend-assets/dashboard/js/core/popper.min.js')}}"></script>
     <script src="{{asset('/frontend-assets/dashboard/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('/frontend-assets/dashboard/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
