@@ -72,6 +72,7 @@
 	background: transparent;
 	border: 1px solid #63c6bd;
 	color: #63c6bd;
+	line-height: 1.0em !important;
 }
 .nav-tabs.nav-justified{
 	margin-bottom: 20px;

@@ -1,4 +1,20 @@
 @extends('admin.layouts.master')
+
+@section('style')
+<link href="{{ asset('frontend-assets/css/jquery-ui.css') }}" rel="stylesheet">
+<link href="{{ asset('frontend-assets/css/jquery.comiseo.daterangepicker.css') }}" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src="https://momentjs.com/downloads/moment.js"></script>
+<script src="{{asset('/frontend-assets/js/jquery.comiseo.daterangepicker.js')}}"></script>
+<script>
+        $(function() { $("#e1").daterangepicker({
+     datepickerOptions : {
+         numberOfMonths : 2
+     }
+ });});
+    </script>
+@endsection
 @section('content')
 
   <div class="wrapper">
@@ -60,10 +76,8 @@
                     <input type="text" class="form-control" id="keyword" placeholder="Search" onkeyup="searchByname(this.value)">
                   </div>
                   <div class="form-group">
-                    <select class="form-control">
-                      <option>Created at</option>
-                      <option>04/02/2020</option>
-                    </select>
+                   <input id="e1" name="e1">
+
                   </div>
                   <div class="form-group">
                     <select name="team" id="" class="form-control" onchange="teams(this);">
@@ -127,16 +141,16 @@
                     <tbody>
                     @foreach($posts as $post)
                       <tr>
-                        <td class="text-right">
+                        <td class="" style="width: 7%;">
                           @if($post->content)
-                          <a href="{{url('dashboard/edit-post-text/'.$post->id)}}"><i class="fa fa-edit text-primary"></i></a>
+                          <a href="{{url('dashboard/edit-post-text/'.$post->id)}}" style="padding-right: 3px;"><i class="fa fa-edit" style="color:gray"></i></a>
                           @elseif($post->image_url)
-                          <a href="{{url('dashboard/edit-post-image/'.$post->id)}}"><i class="fa fa-edit text-primary"></i></a>
+                          <a href="{{url('dashboard/edit-post-image/'.$post->id)}}" style="padding-right: 3px;"><i class="fa fa-edit" style="color:gray"></i></a>
                           @else
-                          <a href="{{url('dashboard/edit-post-link/'.$post->id)}}"><i class="fa fa-edit text-primary"></i></a>
+                          <a href="{{url('dashboard/edit-post-link/'.$post->id)}}" style="padding-right: 3px;"><i class="fa fa-edit" style="color:gray"></i></a>
                           @endif
-                          <a onclick="return confirm('Do you want to delete this item?')" href="{{ url('dashboard/deletepost/'.$post->id) }}"> <i class="fa fa-trash text-danger"></i> </a>
-                          <a href=""><i class="fa fa-eye text-success"></i></a>
+                          <a onclick="return confirm('Do you want to delete this item?')" href="{{ url('dashboard/deletepost/'.$post->id) }}" style="padding-right: 3px;"> <i class="fa fa-trash" style="color:gray"></i> </a>
+                          <a href=""><i class="fa fa-eye" style="color:gray"></i></a>
                         </td>
                              <?php
                         $cover_image=url('frontend-assets/dashboard/img/faces/abc1.jpg');
@@ -175,6 +189,7 @@
 @endsection
 
 @section('script')
+
 <script>
 function teams(data){
  var id =data.value;
