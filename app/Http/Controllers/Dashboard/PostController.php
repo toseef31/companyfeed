@@ -19,7 +19,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
       $allcount=DB::table('wingg_app_post')->count();
-      
+
       $user_id=$request->session()->get('chat_admin')->id;
         $posts=DB::table('wingg_app_post')->select('wingg_app_post.*','wingg_app_position.name AS p_name','wingg_app_team.name AS t_name')
         ->join('wingg_app_user','wingg_app_user.company_id','=','wingg_app_post.company_id')
@@ -386,28 +386,43 @@ public function imagestore(Request $request)
     }
 
 
- public function teamsearch($id)
+
+ public function teamsearch(Request $request)
     {
+      // dd($request->all());
+      $team = $request->input('team');
+      $role = $request->input('role');
         $posts=DB::table('wingg_app_post')->select('wingg_app_post.*','wingg_app_position.name AS p_name','wingg_app_team.name AS t_name')
         ->join('wingg_app_user','wingg_app_user.company_id','=','wingg_app_post.company_id')
         ->join('wingg_app_postteam','wingg_app_postteam.post_id','=','wingg_app_post.id')
         ->join('wingg_app_postposition','wingg_app_postposition.post_id','=','wingg_app_post.id')
         ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
         ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
-        ->where('wingg_app_postteam.team_id','=',$id)->get();
+        ->where('wingg_app_postteam.team_id','=',$team);
+        if ($role !=null) {
+          $posts->where('wingg_app_postposition.position_id','=',$role);
+        }
+        $posts=$posts->get();
         //dd($posts);
          return view('admin.ajaxnews',compact('posts'));
     }
 
-    public function postionsearch($id)
+    public function postionsearch(Request $request)
     {
+      // dd($request->all());
+      $role = $request->input('role');
+      $team = $request->input('team');
         $posts=DB::table('wingg_app_post')->select('wingg_app_post.*','wingg_app_position.name AS p_name','wingg_app_team.name AS t_name')
         ->join('wingg_app_user','wingg_app_user.company_id','=','wingg_app_post.company_id')
         ->join('wingg_app_postteam','wingg_app_postteam.post_id','=','wingg_app_post.id')
         ->join('wingg_app_postposition','wingg_app_postposition.post_id','=','wingg_app_post.id')
         ->join('wingg_app_team','wingg_app_team.id','=','wingg_app_postteam.team_id')
         ->join('wingg_app_position','wingg_app_position.id','=','wingg_app_postposition.position_id')
-        ->where('wingg_app_postposition.position_id','=',$id)->get();
+        ->where('wingg_app_postposition.position_id','=',$role);
+        if ($team !=null) {
+          $posts->where('wingg_app_postteam.team_id','=',$team);
+      }
+        $posts=$posts->get();
         //dd($posts);
          return view('admin.ajaxnews',compact('posts'));
     }

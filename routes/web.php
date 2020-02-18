@@ -22,14 +22,16 @@ Route::group(['prefix' => 'dashboard'], function () {
 
 	Route::match(['get','post'],'/logout', 'Dashboard\JobManageController@logout');
 	Route::get('/news', function(){
-		
+
 	});
 	Route::match(['get','post'],'/add-post', 'Dashboard\PostController@store');
 	Route::post('/imagepost', 'Dashboard\PostController@imagestore');
 	Route::post('/mediastore', 'Dashboard\PostController@mediastore');
 	Route::get('/deletepost/{id}', 'Dashboard\PostController@deletepost');
-	Route::get('/teamsearch/{id}', 'Dashboard\PostController@teamsearch');
-	Route::get('/postionsearch/{id}', 'Dashboard\PostController@postionsearch');
+	// Route::get('/teamsearch/{id}', 'Dashboard\PostController@teamsearch');
+	Route::match(['get','post'],'/teamsearch', 'Dashboard\PostController@teamsearch');
+	// Route::get('/postionsearch/{id}', 'Dashboard\PostController@postionsearch');
+	Route::match(['get','post'],'/postionsearch', 'Dashboard\PostController@postionsearch');
 	Route::post('/search', 'Dashboard\PostController@search');
 
 	Route::match(['get','post'], 'edit-post-text/{id}', 'Dashboard\PostController@editPost');

@@ -127,16 +127,19 @@
                     <tbody>
                     @foreach($posts as $post)
                       <tr>
-                        <td class="text-right">
-                          @if($post->content)
-                          <a href="{{url('dashboard/edit-post-text/'.$post->id)}}"><i class="fa fa-edit text-primary"></i></a>
-                          @elseif($post->image_url)
-                          <a href="{{url('dashboard/edit-post-image/'.$post->id)}}"><i class="fa fa-edit text-primary"></i></a>
-                          @else
-                          <a href="{{url('dashboard/edit-post-link/'.$post->id)}}"><i class="fa fa-edit text-primary"></i></a>
-                          @endif
-                          <a onclick="return confirm('Do you want to delete this item?')" href="{{ url('dashboard/deletepost/'.$post->id) }}"> <i class="fa fa-trash text-danger"></i> </a>
-                          <a href=""><i class="fa fa-eye text-success"></i></a>
+                        <td class="">
+                          <div class="">
+                            @if($post->content)
+                            <a href="{{url('dashboard/edit-post-text/'.$post->id)}}"><i class="fa fa-edit" style="color:gray;"></i></a>
+                            @elseif($post->image_url)
+                            <a href="{{url('dashboard/edit-post-image/'.$post->id)}}"><i class="fa fa-edit" style="color:gray;"></i></a>
+                            @else
+                            <a href="{{url('dashboard/edit-post-link/'.$post->id)}}"><i class="fa fa-edit" style="color:gray;"></i></a>
+                            @endif
+                            <a onclick="return confirm('Do you want to delete this item?')" href="{{ url('dashboard/deletepost/'.$post->id) }}"> <i class="fa fa-trash" style="color:gray;"></i> </a>
+                            <a href=""><i class="fa fa-eye" style="color:gray;"></i></a>
+
+                          </div>
                         </td>
                              <?php
                         $cover_image=url('frontend-assets/dashboard/img/faces/abc1.jpg');
